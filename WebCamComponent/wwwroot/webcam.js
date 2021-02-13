@@ -13,6 +13,11 @@ export async function initialize(videoElement, dotnet) {
     }
 }
 
+export async function stopCamera(videoElement) {
+    let stream = videoElement.srcObject;
+    stream.getTracks().forEach(track => track.stop());
+}
+
 export function getSnapshot(videoElement) {
     //let video = videoElement;
     let canvas = document.createElement("canvas");

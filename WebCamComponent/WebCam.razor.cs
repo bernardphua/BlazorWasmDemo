@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace WebCamComponent
 {
-    public partial class WebCam
+    public partial class WebCam : IDisposable
     {
         const string JSModulePath = "./_content/WebCamComponent/webcam.js";
 
         [Inject] IJSRuntime JSRuntime{ get; set; }
 
-        Lazy<Task<IJSObjectReference>> moduleTask;
-        //IJSObjectReference moduleTask;
+        Lazy<Task<IJSObjectReference>> jsModuleTask;
+        private IJSObjectReference jsModule;
 
         public ElementReference VideoElement { get; set; }
         string errorMessage = null;
@@ -27,10 +27,9 @@ namespace WebCamComponent
         {
             if (firstRender)
             {
-                //moduleTask = JSRuntime.InvokeAsync<IJSObjectReference>("import", JSModulePath).Result;
-                moduleTask = new(() => JSRuntime.InvokeAsync<IJSObjectReference>("import", JSModulePath).AsTask());
-                var module = await moduleTask.Value;
-                await module.InvokeVoidAsync("initialize", VideoElement, DotNetObjectReference.Create(this));
+                jsModuleTask = new(() => JSRuntime.InvokeAsync<IJSObjectReference>("import", JSModulePath).AsTask());
+                jsModule = await jsModuleTask.Value;
+                await jsModule.InvokeVoidAsync("initialize", VideoElement, DotNetObjectReference.Create(this));
             }
         }
 
@@ -52,17 +51,26 @@ namespace WebCamComponent
 
         public async Task<string> GetSnapShot()
         {
-            var module = await moduleTask.Value;
-            return await module.InvokeAsync<string>("getSnapshot", VideoElement);
+            return await jsModule.InvokeAsync<string>("getSnapshot", VideoElement);
         }
 
-        public async ValueTask DisposeAsync()
+        //public async ValueTask DisposeAsync()
+        //{
+        //    if (moduleTask.IsValueCreated)
+        //    {
+        //        var module = await moduleTask.Value;
+        //        await module.DisposeAsync();
+        //    }
+        //}
+
+        public async void Dispose()
         {
-            if (moduleTask.IsValueCreated)
+            if (jsModuleTask.IsValueCreated)
             {
-                var module = await moduleTask.Value;
-                await module.DisposeAsync();
+                await jsModule.InvokeVoidAsync("stopCamera", VideoElement);
+                await jsModule.DisposeAsync();
             }
+            GC.SuppressFinalize(this);
         }
     }
 }
