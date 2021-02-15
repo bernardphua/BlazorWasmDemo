@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWasmDemo.Server", "BlazorWasmDemo\Server\BlazorWasmDemo.Server.csproj", "{AC0D6896-76D8-4471-95A5-95FC5B7A8255}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWasmDemo.Server", "BlazorWasmDemo\Server\BlazorWasmDemo.Server.csproj", "{AC0D6896-76D8-4471-95A5-95FC5B7A8255}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWasmDemo.Client", "BlazorWasmDemo\Client\BlazorWasmDemo.Client.csproj", "{DC890F96-C178-4E49-8E17-0E0B878D1EEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWasmDemo.Client", "BlazorWasmDemo\Client\BlazorWasmDemo.Client.csproj", "{DC890F96-C178-4E49-8E17-0E0B878D1EEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWasmDemo.Shared", "BlazorWasmDemo\Shared\BlazorWasmDemo.Shared.csproj", "{06468258-0517-46D1-8748-7DCAF00CFD2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWasmDemo.Shared", "BlazorWasmDemo\Shared\BlazorWasmDemo.Shared.csproj", "{06468258-0517-46D1-8748-7DCAF00CFD2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCamComponent", "WebCamComponent\WebCamComponent.csproj", "{717A4C52-567D-48DA-A88D-57142AC67FF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCamComponent", "WebCamComponent\WebCamComponent.csproj", "{717A4C52-567D-48DA-A88D-57142AC67FF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

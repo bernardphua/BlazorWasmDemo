@@ -1,0 +1,33 @@
+﻿@page "/WebCamDemo"
+
+<h3>WebCam Demo</h3>
+
+<div>
+    <button class="btn btn-primary" @onclick="OnCamera">Turn on Camera</button>
+    <button class="btn btn-secondary" @onclick="GetOffCamera">Turn Off Camera</button>
+    <button class="btn btn-warning" @onclick="Snapshot">Snapshot Camera</button>
+</div>
+<br />
+<div class="d-flex p-3 border bg-dark text-white" >
+    <div class="row flex-fill">
+        <div class="p-2 flex-fill">
+            <h5> Camera</h5>
+            <p> Click Turn on Camera to start streaming video.</p>
+            <WebCam @ref="Camera" Width="100%" Height="100%"></WebCam>
+        </div>
+        <div class="p-2 flex-fill">
+            <h5>Snapshot of Video Image</h5>
+            <p>Click Snapshot to take a picture of the Video.</p>
+            @if (imageData != null)
+            {
+                <img class="p-1 border" style="width:100%; height:auto" src="@imageData" />
+            }
+            else
+            {
+                <div class="alert alert-heading border">
+                    No image capture at the moment.
+                </div>
+            }
+        </div>
+    </div>
+</div>

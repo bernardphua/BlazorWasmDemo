@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using Microsoft.JSInterop.Implementation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,11 @@ namespace WebCamComponent
         Lazy<Task<IJSObjectReference>> jsModuleTask;
         private IJSObjectReference jsModule;
 
+        [Parameter]
+        public string Width { get; set; } = "100%";
+        [Parameter]
+        public string Height { get; set; } = "100%";
+
         public ElementReference VideoElement { get; set; }
         string errorMessage = null;
         bool isCameraStreaming = false;
@@ -29,7 +35,6 @@ namespace WebCamComponent
             {
                 jsModuleTask = new(() => JSRuntime.InvokeAsync<IJSObjectReference>("import", JSModulePath).AsTask());
                 jsModule = await jsModuleTask.Value;
-                await jsModule.InvokeVoidAsync("initialize", VideoElement, DotNetObjectReference.Create(this));
             }
         }
 
@@ -49,19 +54,20 @@ namespace WebCamComponent
             StateHasChanged();
         }
 
+        public async void StartCamera()
+        {
+            await jsModule.InvokeVoidAsync("startCamera", VideoElement, DotNetObjectReference.Create(this));
+        }
+
+        public async void StopCamera()
+        {
+            await jsModule.InvokeVoidAsync("stopCamera", VideoElement);
+        }
+
         public async Task<string> GetSnapShot()
         {
             return await jsModule.InvokeAsync<string>("getSnapshot", VideoElement);
         }
-
-        //public async ValueTask DisposeAsync()
-        //{
-        //    if (moduleTask.IsValueCreated)
-        //    {
-        //        var module = await moduleTask.Value;
-        //        await module.DisposeAsync();
-        //    }
-        //}
 
         public async void Dispose()
         {
